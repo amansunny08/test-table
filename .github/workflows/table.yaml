@@ -28,14 +28,14 @@ jobs:
       - name: Print Step Status Summary
         run: |
           table=""
-          table+="| Name | Age |\n"
-          table+="| ---- | --- |\n"
+          table+="| Name | Age | \n"
+          table+="| ---- | --- | \n"
 
           # Loop over the JSON array elements
           for row in $(cat step1_output.json step2_output.json step3_output.json | jq -r '.[]'); do
             name=$(echo "${row}" | jq -r '.name')
             age=$(echo "${row}" | jq -r '.age')
-            table+="| ${name} | ${age} |\n"
+            table+="| ${name} | ${age} | \n"
           done
 
           echo "${table}"
