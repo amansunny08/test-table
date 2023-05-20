@@ -1,0 +1,41 @@
+name: Workflow with Table Summary
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Step 1
+        id: step1
+        run: |
+           echo '{"name": "John", "age": 30}' > step1_output.json
+
+      - name: Run Step 2
+        id: step2
+        run: | 
+           echo '{"name": "Jane", "age": 25}' > step2_output.json
+
+      - name: Run Step 3
+        id: step3
+        run: |
+           echo '{"name": "Bob", "age": 40}' > step3_output.json
+
+      - name: Print Step Status Summary
+        run: |
+          table=""
+          table+="| Name | Age |\n"
+          table+="| ---- | --- |\n"
+
+          # Loop over the JSON array elements
+          for row in $(cat step1_output.json step2_output.json step3_output.json | jq -r '.[]'); do
+            name=$(echo "${row}" | jq -r '.name')
+            age=$(echo "${row}" | jq -r '.age')
+            table+="| ${name} | ${age} |\n"
+          done
+
+          echo "${table}"
