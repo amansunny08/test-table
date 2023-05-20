@@ -1,0 +1,20 @@
+name: show table
+on: push
+jobs:
+   first-job:
+      runs-on: ubuntu-latest
+      steps:
+         - name: hello
+           run: echo "hello"
+
+         - name: world
+           run: echo "world"
+
+         - name: Simple job Summary  
+           run: echo '### Hello World !! :rocket:' >> $GITHUB_STEP_SUMMARY
+
+         - name: Generate a table
+           run: |
+              echo "| Test Result :test_tube: | Passed :green_circle: | Failed :x: | Skipped | Time Duration :alarm_clock: |" >> $GITHUB_STEP_SUMMARY
+              echo "| ---------   | ------- | ----- | ------- | ---------- |" >> $GITHUB_STEP_SUMMARY
+              echo "| :green_circle: Pass |  122 | 0 | 3 | 12m 3s |" >> $GITHUB_STEP_SUMMARY     
